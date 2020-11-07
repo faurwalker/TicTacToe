@@ -22,7 +22,7 @@ int main(int argc, char * argv[]){
 				printf("Your flag option '-%c' is incorrect!  \n", optopt);	
 		}	
 	}	
-	printf("my settings mode = %d", my_settings->mode);	
+	StartGame();
 	return 0;
 }
 
