@@ -31,24 +31,39 @@ void displayBoard(int *board){
 }
 
 
-void StartGame(){
+
+void StartSession(char *pl1, char *pl2){
+	GameSettingPtr game = (GameSetting*)(malloc(sizeof(GameSetting)));
+	game->pl1 = pl1;
+	game->pl2 = pl2;
+	while(confirm()){
+		StartGame(game);
+		printStat(game);	
+	}
+
+}
+
+
+int StartGame(GameSettingPtr game){
 	int board[9] = {[0 ... 8] = -1};
 	int turn = 1;
+	displayBoard(board);
 	while(1){
-		displayBoard(board);
 		makemove(board, turn);
+		displayBoard(board);
 		if(checkBoard(board) == 1){
-			printf("\n Game Over  !!!");
-			break;	
+			printf("\n\n Game Over  !!! %s won the game \n", playerByTurn(turn, game));
+			return 1;
 		};
 		turn++;
 	}
+	printf("\n\n TIE! Nobody wins!\n");
 			
 }
 
 
-int checkBoard(char *arr){
-	int combs[][3] = {
+int checkBoard(int *arr){
+	int combs[8][3] = {
 		{0,1,2},
 		{3,4,5},
 		{6,7,8},
@@ -59,7 +74,7 @@ int checkBoard(char *arr){
 		{2,4,6}	
 	};
 	for(int i = 0; i < 8; i++){
-		if(arr[combs[i][0]] == arr[combs[i][1]] && arr[combs[i][1]] == arr[combs[i][2]] && arr[combs[i][0]] != -1){
+		if(arr[combs[i][0]] == arr[combs[i][1]]  &&  arr[combs[i][1]] == arr[combs[i][2]] && arr[combs[i][0]] != -1){
 			return 1;
 		}
 	}	
@@ -70,7 +85,7 @@ int checkBoard(char *arr){
 int *makemove( int *arr, int turn){
 	int a;
 	while(1){
-		printf("Please make your move ( 1 - 9 ) ! \n");
+		printf("\n\nPlease make your move ( 1 - 9 ) ! \n");
 		scanf("%d",&a);
 		if(a > 0 && a < 10 && arr[a-1] != 1 && arr[a-1] != 0){
 			break;	
@@ -82,3 +97,27 @@ int *makemove( int *arr, int turn){
 	
 }
 
+char *playerByTurn(int num, GameSettingPtr game){
+	if(num % 2 != 0){
+		game->pl1_win++;
+		return game->pl1;	
+	}
+	game->pl2_win++;
+	return game->pl2;	
+}
+
+
+void printStat(GameSettingPtr game){
+	printf("Name: %s , Score: %d \n\nName: %s , Score: %d\n\n",game->pl1, game->pl1_win, game->pl2, game->pl2_win);
+
+}
+
+int confirm(){
+	printf("\nWant to play another game? (y/n)\n");
+	int i;
+	scanf("%d", &i);
+		if(i == 1){
+			return 1;
+		}
+	return 0;
+}

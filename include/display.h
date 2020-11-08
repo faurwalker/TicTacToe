@@ -13,13 +13,17 @@ typedef struct Settings{
 typedef Settings* SettingsPtr;
 
 
-typedef struct User{
-	char name[15];
-	int games_played;
-	int games_won;
-}User;
+typedef struct GameSetting{
+	char *pl1;
+	char *pl2;
 
-typedef User* UserPtr;
+	int games_played;
+	int pl1_win;
+	int pl2_win;
+
+}GameSetting;
+
+typedef GameSetting* GameSettingPtr;
 
 typedef struct Game{
 	char *fuser; 
@@ -28,8 +32,12 @@ typedef struct Game{
 
 void displayMenu();
 void displayHelp();
-void StartGame();
+int StartGame();
 void displayBoard();
 int checkBoard();
 int *makemove();
+void StartSession();
+void printStat();
+char *playerByTurn();
+int confirm();
 #endif

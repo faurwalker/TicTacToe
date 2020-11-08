@@ -9,6 +9,9 @@ int main(int argc, char * argv[]){
 	enum { SINGLE_PLAYER, TWO_PLAYERS } mode = TWO_PLAYERS;
 	int opt;
 	opterr = 0;
+	char player1[] = "Player1";
+	char player2[] = "Player2";
+
 	while((opt = getopt(argc, argv, "hb")) != -1){
 		switch(opt){
 			case 'h':
@@ -22,7 +25,7 @@ int main(int argc, char * argv[]){
 				printf("Your flag option '-%c' is incorrect!  \n", optopt);	
 		}	
 	}	
-	StartGame();
+	StartSession(player1,player2);
 	return 0;
 }
 
