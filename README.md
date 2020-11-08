@@ -1,5 +1,5 @@
 # TicTacToe
-[TicTacToe](https://raw.githubusercontent.com/faurwalker/TicTacToe/main/logo.PNG)
+![TicTacToe](https://raw.githubusercontent.com/faurwalker/TicTacToe/main/logo.PNG)
 
 Simple implementation of Tic Tac Toe game written on c.
 
