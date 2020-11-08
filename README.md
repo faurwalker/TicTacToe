@@ -8,7 +8,9 @@ Clone repository using `git clone`
 git clone https://github.com/faurwalker/TicTacToe
 ```
 To build use `make` 
-```shell make ```
+```bash 
+make
+```
 
 ## Usage 
 
@@ -16,9 +18,9 @@ To build use `make`
 
 ## TODO
 
-# Add more parameters
-# Add input filtering 
-# Add a single player mode 
-# Add a board's size regulation
+* Add more parameters
+* Add input filtering 
+* Add a single player mode 
+* Add a board's size regulation
 
 
