@@ -1,4 +1,6 @@
 # TicTacToe
+[TicTacToe](https://raw.githubusercontent.com/faurwalker/TicTacToe/main/logo.PNG)
+
 Simple implementation of Tic Tac Toe game written on c.
 
 ## Instalation
@@ -22,5 +24,6 @@ make
 * Add input filtering 
 * Add a single player mode 
 * Add a board's size regulation
-
+* Add colors to the game
+* Fix board display
 
