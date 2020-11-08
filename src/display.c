@@ -18,13 +18,20 @@ void displayHelp(){
 void displayBoard(int *board){
 	displayMenu();
 	for(int i = 0; i < 3; i++){
-		int arr[3] = {board[i*3], board[i*3 + 1], board[i*3+2]};
+		char arr[3] = {board[i*3], board[i*3 + 1], board[i*3+2]};
 		for(int j = 0; j < 3; j++){
 			if(arr[j] == -1){
-				arr[j] = i*3 + j + 1;
+				arr[j] = i*3 + j + 1 + '0';
+			}
+			else{
+				if(arr[j] == 1){
+					arr[j] = 'X';
+				} else{
+					arr[j] = 'O';
+				}	
 			}
 		}
-			printf("\n\t %d  | %d  | %d  \n\t____|____|____",arr[0],arr[1],arr[2]);
+			printf("\n\t %c  | %c  | %c  \n\t____|____|____",arr[0],arr[1],arr[2]);
 		
 	}
 
@@ -36,9 +43,12 @@ void StartSession(char *pl1, char *pl2){
 	GameSettingPtr game = (GameSetting*)(malloc(sizeof(GameSetting)));
 	game->pl1 = pl1;
 	game->pl2 = pl2;
-	while(confirm()){
+	int conf = 1;
+	while(conf){
 		StartGame(game);
 		printStat(game);	
+		conf = confirm();
+		game->games_played++;
 	}
 
 }
@@ -46,16 +56,14 @@ void StartSession(char *pl1, char *pl2){
 
 int StartGame(GameSettingPtr game){
 	int board[9] = {[0 ... 8] = -1};
-	int turn = 1;
 	displayBoard(board);
-	while(1){
-		makemove(board, turn);
+	for(int k = 1; k < 10; k++){
+		makemove(board, k, game);
 		displayBoard(board);
 		if(checkBoard(board) == 1){
-			printf("\n\n Game Over  !!! %s won the game \n", playerByTurn(turn, game));
+			printf("\n\n Game Over  !!! %s won the game \n", playerByTurn(game));
 			return 1;
 		};
-		turn++;
 	}
 	printf("\n\n TIE! Nobody wins!\n");
 			
@@ -82,7 +90,7 @@ int checkBoard(int *arr){
 }
 
 
-int *makemove( int *arr, int turn){
+int *makemove( int *arr, int turn, GameSettingPtr game){
 	int a;
 	while(1){
 		printf("\n\nPlease make your move ( 1 - 9 ) ! \n");
@@ -93,12 +101,12 @@ int *makemove( int *arr, int turn){
 		printf("Invalid Move! "); 
 
 	}
-	arr[a-1] = (turn % 2 == 0)? 1 : 0;
-	
+	arr[a-1] = (turn % 2 != 0)? 1 : 0;
+
 }
 
-char *playerByTurn(int num, GameSettingPtr game){
-	if(num % 2 != 0){
+char *playerByTurn(GameSettingPtr game){
+	if(game->games_played % 2 == 0){
 		game->pl1_win++;
 		return game->pl1;	
 	}
@@ -108,16 +116,16 @@ char *playerByTurn(int num, GameSettingPtr game){
 
 
 void printStat(GameSettingPtr game){
-	printf("Name: %s , Score: %d \n\nName: %s , Score: %d\n\n",game->pl1, game->pl1_win, game->pl2, game->pl2_win);
+	printf("\n\nName: %s , Score: %d \n\nName: %s , Score: %d\n\n",game->pl1, game->pl1_win, game->pl2, game->pl2_win);
 
 }
 
 int confirm(){
 	printf("\nWant to play another game? (y/n)\n");
-	int i;
-	scanf("%d", &i);
-		if(i == 1){
-			return 1;
-		}
+	char c = getchar();
+	if(c == '\n') c = getchar();	
+	if(c == 'y'){
+		return 1;
+	}
 	return 0;
 }
