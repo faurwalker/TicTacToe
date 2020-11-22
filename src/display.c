@@ -1,5 +1,5 @@
 #include "../include/display.h"
-
+#include "../include/bot.h"
 
 void displayMenu(){
 	clear();
@@ -39,13 +39,18 @@ void displayBoard(int *board){
 
 
 
-void StartSession(char *pl1, char *pl2){
+void StartSession(SettingsPtr settings){
 	GameSettingPtr game = (GameSetting*)(malloc(sizeof(GameSetting)));
-	game->pl1 = pl1;
-	game->pl2 = pl2;
+	game->pl1 = settings->pl1;
+	game->pl2 = settings->pl2;
 	int conf = 1;
 	while(conf){
-		StartGame(game);
+		// StartGame() - two players mode, StartBotGame() - single player mode
+		if(settings->mode){
+			StartGame(game);
+		} else {
+			StartBotGame(game);		
+		}
 		printStat(game);	
 		conf = confirm();
 		game->games_played++;

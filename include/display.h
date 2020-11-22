@@ -6,12 +6,6 @@
 
 #define clear() system("clear")
 
-typedef struct Settings{
-	int mode; // 0 - single player, 1 - twoplayers
-
-}Settings;
-typedef Settings* SettingsPtr;
-
 
 typedef struct GameSetting{
 	char *pl1;
@@ -25,9 +19,6 @@ typedef struct GameSetting{
 
 typedef GameSetting* GameSettingPtr;
 
-typedef struct Game{
-	char *fuser; 
-}Game;
 
 
 void displayMenu();
