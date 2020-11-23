@@ -43,14 +43,12 @@ void StartSession(SettingsPtr settings){
 	GameSettingPtr game = (GameSetting*)(malloc(sizeof(GameSetting)));
 	game->pl1 = settings->pl1;
 	game->pl2 = settings->pl2;
+	game->mode = settings->mode;
 	int conf = 1;
 	while(conf){
 		// StartGame() - two players mode, StartBotGame() - single player mode
-		if(settings->mode){
-			StartGame(game);
-		} else {
-			StartBotGame(game);		
-		}
+
+		StartGame(game);
 		printStat(game);	
 		conf = confirm();
 		game->games_played++;
@@ -96,18 +94,21 @@ int checkBoard(int *arr){
 
 
 int *makemove( int *arr, int turn, GameSettingPtr game){
-	int a;
-	while(1){
-		printf("\n\nPlease make your move ( 1 - 9 ) ! \n");
-		scanf("%d",&a);
-		if(a > 0 && a < 10 && arr[a-1] != 1 && arr[a-1] != 0){
-			break;	
+	if(game->mode != 1 && turn % 2 == 0){ // if single player mode choosen we give turn to the bot
+		BotMakeMove(arr,game);
+	} else {
+		int a;
+		while(1){
+			printf("\n\nPlease make your move ( 1 - 9 ) ! \n");
+			scanf("%d",&a);
+			if(a > 0 && a < 10 && arr[a-1] != 1 && arr[a-1] != 0){
+				break;	
+			}
+			printf("Invalid Move! "); 
+
 		}
-		printf("Invalid Move! "); 
-
+		arr[a-1] = (turn % 2 != 0)? 1 : 0;
 	}
-	arr[a-1] = (turn % 2 != 0)? 1 : 0;
-
 }
 
 char *playerByTurn(GameSettingPtr game){

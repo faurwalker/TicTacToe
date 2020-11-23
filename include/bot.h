@@ -12,4 +12,6 @@ typedef struct Settings {
 typedef Settings* SettingsPtr;
 
 void StartBotGame();
+void BotMakeMove();
+int CheckPos();
 #endif

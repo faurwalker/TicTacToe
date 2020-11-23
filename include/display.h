@@ -10,7 +10,8 @@
 typedef struct GameSetting{
 	char *pl1;
 	char *pl2;
-
+	
+	int mode;
 	int games_played;
 	int pl1_win;
 	int pl2_win;
